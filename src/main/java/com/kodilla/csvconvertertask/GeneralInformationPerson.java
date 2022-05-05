@@ -1,6 +1,6 @@
 package com.kodilla.csvconvertertask;
 
-public class GeneralInformationPerson{
+public class GeneralInformationPerson {
 
     private String name;
     private String surname;

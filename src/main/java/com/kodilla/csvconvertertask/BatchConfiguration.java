@@ -34,17 +34,17 @@ public class BatchConfiguration {
     }
 
     @Bean
-    FlatFileItemReader<Person> reader() {
+    FlatFileItemReader<SpecificInformationPerson> reader() {
         FlatFileItemReader flatFileItemReader = new FlatFileItemReader();
         flatFileItemReader.setResource(new ClassPathResource("input.csv"));
 
         DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
-        tokenizer.setNames("name", "surname", "date");
+        tokenizer.setNames("name", "surname", "birthdayDate");
 
-        BeanWrapperFieldSetMapper<Person> mapper = new BeanWrapperFieldSetMapper<>();
-        mapper.setTargetType(Person.class);
+        BeanWrapperFieldSetMapper<SpecificInformationPerson> mapper = new BeanWrapperFieldSetMapper<>();
+        mapper.setTargetType(SpecificInformationPerson.class);
 
-        DefaultLineMapper<Person> lineMapper = new DefaultLineMapper<>();
+        DefaultLineMapper<SpecificInformationPerson> lineMapper = new DefaultLineMapper<>();
         lineMapper.setLineTokenizer(tokenizer);
         lineMapper.setFieldSetMapper(mapper);
 
@@ -58,11 +58,11 @@ public class BatchConfiguration {
     }
 
     @Bean
-    FlatFileItemWriter<Person> writer() {
-        BeanWrapperFieldExtractor<Person> extractor = new BeanWrapperFieldExtractor<>();
-        extractor.setNames(new String[]{"name", "surname", "date"});
+    FlatFileItemWriter<GeneralInformationPerson> writer() {
+        BeanWrapperFieldExtractor<GeneralInformationPerson> extractor = new BeanWrapperFieldExtractor<>();
+        extractor.setNames(new String[]{"name", "surname", "age"});
 
-        DelimitedLineAggregator<Person> aggregator = new DelimitedLineAggregator<>();
+        DelimitedLineAggregator<GeneralInformationPerson> aggregator = new DelimitedLineAggregator<>();
         aggregator.setDelimiter(",");
         aggregator.setFieldExtractor(extractor);
 
@@ -75,9 +75,9 @@ public class BatchConfiguration {
     }
 
     @Bean
-    Step calculateAge(ItemReader<Person> reader, ItemProcessor<Person, Person> processor, ItemWriter<Person> writer) {
+    Step calculateAge(ItemReader<SpecificInformationPerson> reader, ItemProcessor<SpecificInformationPerson, GeneralInformationPerson> processor, ItemWriter<GeneralInformationPerson> writer) {
         return stepBuilderFactory.get("calculateAge")
-                .<Person, Person>chunk(100)
+                .<SpecificInformationPerson, GeneralInformationPerson>chunk(100)
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)

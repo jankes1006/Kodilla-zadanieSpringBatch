@@ -1,17 +1,18 @@
 package com.kodilla.csvconvertertask;
 
-public class Person {
+public class SpecificInformationPerson {
+
     private String name;
     private String surname;
-    private String date;
+    private String birthdayDate;
 
-    public Person(String name, String surname, String date) {
+    public SpecificInformationPerson(String name, String surname, String birthdayDate) {
         this.name = name;
         this.surname = surname;
-        this.date = date;
+        this.birthdayDate = birthdayDate;
     }
 
-    public Person() {
+    public SpecificInformationPerson() {
     }
 
     public String getName() {
@@ -30,11 +31,11 @@ public class Person {
         this.surname = surname;
     }
 
-    public String getDate() {
-        return date;
+    public String getBirthdayDate() {
+        return birthdayDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setBirthdayDate(String birthdayDate) {
+        this.birthdayDate = birthdayDate;
     }
 }

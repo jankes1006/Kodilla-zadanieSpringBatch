@@ -4,11 +4,11 @@ import org.springframework.batch.item.ItemProcessor;
 
 import java.time.LocalDate;
 
-public class PersonProcessor implements ItemProcessor<Person, Person> {
+public class PersonProcessor implements ItemProcessor<SpecificInformationPerson, GeneralInformationPerson> {
     @Override
-    public Person process(Person person) throws Exception {
-        LocalDate birthday = LocalDate.parse(person.getDate());
+    public GeneralInformationPerson process(SpecificInformationPerson person) throws Exception {
+        LocalDate birthday = LocalDate.parse(person.getBirthdayDate());
         int agePerson = LocalDate.now().getYear() - birthday.getYear();
-        return new Person(person.getName(), person.getSurname(), String.valueOf(agePerson));
+        return new GeneralInformationPerson(person.getName(), person.getSurname(), agePerson);
     }
 }
